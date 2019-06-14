@@ -12,7 +12,6 @@ module.exports = server => {
 };
 
 function register(req, res) {
-  // implement user registration
   const creds = req.body;
   const hash = bcrypt.hashSync(creds.password, 4);
   creds.password = hash;
@@ -38,7 +37,20 @@ function generateToken(user) {
 }
 
 function login(req, res) {
-  // implement user login
+  const creds = req.body;
+
+  db("users")
+    .where({ username: creds.username })
+    .first()
+    .then(user => {
+      if (user && bcrypt.compareSync(creds.password, user.password)) {
+        const token = generateToken(user);
+        res.status(200).json({ message: "Welcome! :)", token });
+      } else {
+        res.status(401).json({ message: "you shall not pass!!" });
+      }
+    })
+    .catch(err => res.json(err));
 }
 
 function getJokes(req, res) {
