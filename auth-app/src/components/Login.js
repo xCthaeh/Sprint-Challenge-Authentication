@@ -64,7 +64,7 @@ export default class Login extends Component {
             value={this.state.user.password}
             onChange={this.inputHandler}
           />
-          <button type="submit">Submit</button>
+          <button className="submit" type="submit">Submit</button>
         </form>
         {this.state.message ? <h4>{this.state.message}</h4> : undefined}
       </div>
