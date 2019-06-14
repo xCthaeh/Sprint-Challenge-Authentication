@@ -1,7 +1,6 @@
 const axios = require("axios");
 const bcrypt = require("bcryptjs");
 const db = require("../database/dbConfig");
-const jwtKey = require("../secret/secrets").jwtKey;
 const jwt = require("jsonwebtoken");
 const { authenticate } = require("../auth/authenticate");
 
@@ -27,7 +26,7 @@ function register(req, res) {
 function generateToken(user) {
   const payload = {
     subject: user.id,
-    username: user.usernam
+    username: user
   };
   const secret = jwtKey;
   const options = {
